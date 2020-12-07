@@ -1,0 +1,96 @@
+@baseUrl = https://postman-echo.com
+@name = REST CLIENT
+@sampleBody = "{ name: 123 }"
+
+POST {{baseUrl}}/post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "{{sampleBody}}"
+}
+
+
+// ----------------------------------
+// ENV from other sources VARIABLES
+// ----------------------------------
+
+###
+// .env file variables
+POST {{$dotenv myURL}}/post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "{{$dotenv myName}}",
+    "age" : "{{$dotenv myAge}}"
+}
+
+###
+// Process env variables
+POST {{baseUrl}}/post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "{{$processEnv MYNAME}}",
+}
+###
+
+// ----------------------------------
+// PREVIOUS REQ/RESPONSE AS VARIABLES
+// ----------------------------------
+
+# @name getContent
+GET {{baseUrl}}/get?name=babara
+
+###
+// use request and response
+POST {{baseUrl}}/post HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "{{getContent.response.body.args.name}}",
+    "test": "{{ghAuth}}",
+    "userAgent": "{{getContent.request.headers.User-Agent}}",
+    "product": {
+        "price": [1,2,3]
+    }
+}
+
+###
+
+// Take whole Response as body
+@prevResponseBody = {{getContent.response.body.*}}
+
+POST {{baseUrl}}/post HTTP/1.1
+Content-Type: application/json
+
+{{getContent.response.body.*}}
+
+###
+
+
+
+// ----------------------------------
+// Global VSCODE settings VARIABLES
+// ----------------------------------
+
+GET {{baseUrl}}/get?name=babara
+Authorization: {{token}}
+###
+
+
+// ----------------------------------
+// SPECIAL VARIABLES
+// ----------------------------------
+POST {{baseUrl}}/post
+Content-Type: application/json
+
+{
+    "dateNo": "{{$timestamp 2 d}}",
+    "unqieId": "{{$guid}}",
+    "timeStampNow": "{{$timestamp}}",
+    "groupNo": "{{$randomInt 1 10}}",
+    "local_date": "{{$localDatetime 'YYYY-MM-DD'}}",
+    "today": "{{$datetime "DD-MM-YYYY" 0 d}}"
+}
+
+###

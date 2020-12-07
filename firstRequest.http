@@ -1,0 +1,23 @@
+
+
+### 
+GET postman-echo.com/headers
+// <----- headers
+My-Sample-Header: Lorem ipsum dolor sit amet 
+// <----- headers
+
+###
+
+curl --location --request GET 'postman-echo.com/headers' \
+--header 'my-sample-header: Lorem ipsum dolor sit amet'
+
+###
+POST https://postman-echo.com/post
+Content-Type: application/json
+
+{
+  "authenticated": true,
+  "data": 123
+}
+
+###
