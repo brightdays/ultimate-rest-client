@@ -1,17 +1,23 @@
-
-
-### 
-GET postman-echo.com/headers
-// <----- headers
-My-Sample-Header: Lorem ipsum dolor sit amet 
-// <----- headers
+// FIRST REQUEST Form
+//------- method ----------
+https://postman-echo.com/post
+//------- headers ---------
+content-type: application/json
+Authorization: Bearer 123asd
+//-------- body ----------- 
+{                                  
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
 
 ###
+// Equivalent cURL request
 
 curl --location --request GET 'postman-echo.com/headers' \
 --header 'my-sample-header: Lorem ipsum dolor sit amet'
 
 ###
+// First POST request example
 POST https://postman-echo.com/post
 Content-Type: application/json
 
